@@ -1,5 +1,20 @@
-### Create a new bok
+### Create a new book
 POST http://localhost:8080/api/books
+Content-Type: application/json
+
+{
+  "id": 19928,
+  "name": "Mythical Man-Month, The Essays on Software Engineering",
+  "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+  "author": "Frederick P. Brooks",
+  "isbn": "9780201835953",
+  "price": 190000,
+  "category": "Engineering",
+  "publicationYear": 1995
+}
+
+### Delete a book
+DELETE http://localhost:8080/api/books
 Content-Type: application/json
 
 {
