@@ -24,6 +24,12 @@ public class BookController {
         return bookService.createNewBook(bookDTO);
     }
 
+    @Operation(summary = "Delete a Book")
+    @DeleteMapping
+    public BookDTO deleteBook(@RequestBody BookDTO bookDTO) throws Exception {
+        return bookService.deleteBook(bookDTO);
+    }
+
     @Operation(summary = "Update an existing book")
     @PutMapping("/{id}")
     public BookDTO updateBook(@PathVariable(name = "id") Long bookId, @RequestBody BookDTO bookDTO) throws Exception {

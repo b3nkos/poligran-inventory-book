@@ -57,7 +57,7 @@ public class BookService {
 
     }
 
-    public BookDTO deleteBookBook(BookDTO bookDto) throws Exception {
+    public BookDTO deleteBook(BookDTO bookDto) throws Exception {
         Optional<Book> optionalBook = bookRepository.findById(bookDto.getId());
 
         isANullBook(optionalBook);

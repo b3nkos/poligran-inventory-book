@@ -98,7 +98,7 @@ class BookServiceTest {
 
         when(bookRepositoryMock.findById(12345L)).thenReturn(Optional.of(bookFound));
 
-        BookDTO actualBookDto = bookService.deleteBookBook(bookDto);
+        BookDTO actualBookDto = bookService.deleteBook(bookDto);
 
         verify(bookRepositoryMock, times(1)).delete(any(Book.class));
         assertThat(actualBookDto).isNotNull();
