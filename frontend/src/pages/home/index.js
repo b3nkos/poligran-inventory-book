@@ -9,7 +9,7 @@ export const Home = () => {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/books")
+    fetch("http://localhost:8080/api/books")
       .then((res) => res.json())
       .then((result) => {
         console.log("result", result);
@@ -21,18 +21,19 @@ export const Home = () => {
     <Row xs={1} md={5} className="g-5">
       {books.map((book, index) => (
         <Link
+          key={book.id}
           to={`/book/${book.id}`}
           style={{ color: "black", textDecoration: "none" }}
         >
-          <Col key={index}>
+          <Col>
             <Card>
               <Card.Img
                 variant="top"
                 src={`https://api.lorem.space/image/book?w=218&h=320&t=${index}`}
               />
               <Card.Body>
-                <Card.Title>{book.title}</Card.Title>
-                <Card.Text>This is a longer card with supporting...</Card.Text>
+                <Card.Title>{book.name}</Card.Title>
+                <Card.Text>{book.description}</Card.Text>
               </Card.Body>
             </Card>
           </Col>

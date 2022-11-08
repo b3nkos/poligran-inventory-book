@@ -15,7 +15,7 @@ export const SinglePost = () => {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/book/${bookId}`)
+    fetch(`http://localhost:8080/api/books/${bookId}`)
       .then((res) => res.json())
       .then((result) => {
         console.log("result", result);
@@ -32,7 +32,7 @@ export const SinglePost = () => {
         />
       </Col>
       <Col>
-        <h3>{book.title}</h3>
+        <h3>{book.name}</h3>
         <p>{book.description}</p>
         <Button variant="secondary" onClick={handleShow}>
           Editar
