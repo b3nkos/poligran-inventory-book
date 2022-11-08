@@ -1,14 +1,14 @@
-FROM amazoncorretto:11-alpine-jdk
+FROM maven:3.8.6-amazoncorretto-11
 
 WORKDIR /app
 
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
-RUN chmod +x ./mvnw
-RUN ./mvnw dependency:go-offline
+#COPY .mvn/ .mvn
+COPY pom.xml ./
+#RUN chmod +x ./mvnw
+RUN mvn dependency:go-offline
 
 COPY src ./src
 
 EXPOSE 8080
 
-CMD ["./mvnw", "spring-boot:run"]
+CMD ["mvn", "spring-boot:run"]
