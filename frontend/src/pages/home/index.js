@@ -11,8 +11,7 @@ export const Home = () => {
   useEffect(() => {
     fetch("http://localhost:8080/api/books")
       .then((res) => res.json())
-      .then((result) => {
-        console.log("result", result);
+      .then((result) => {        
         setBooks(result);
       });
   }, []);
