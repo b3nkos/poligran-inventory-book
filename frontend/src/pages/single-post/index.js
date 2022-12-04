@@ -5,7 +5,8 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
-import { useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const SinglePost = () => {
   let { bookId } = useParams();
@@ -13,6 +14,8 @@ export const SinglePost = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const { register, handleSubmit, reset } = useForm();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`http://localhost:8080/api/books/${bookId}`)
@@ -20,8 +23,43 @@ export const SinglePost = () => {
       .then((result) => {
         console.log("result", result);
         setBook(result);
+        reset(result);
       });
-  }, []);
+  }, [reset]);
+
+  const updateBook = (data) => {
+    delete data.id;
+    console.log("data", data);
+    fetch(`http://localhost:8080/api/books/${book.id}`, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...data,
+      }),
+    }).then(() => {
+      setBook(data);
+      handleClose(false);
+    });
+  };
+
+  const deleteBook = () => {
+    fetch("http://localhost:8080/api/books", {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...book,
+      }),
+    }).then(() => {
+      handleClose(false);
+      navigate("/");
+    });
+  };
 
   return (
     <Row>
@@ -34,37 +72,75 @@ export const SinglePost = () => {
       <Col>
         <h3>{book.name}</h3>
         <p>{book.description}</p>
+        <p>Autor: {book.author}</p>
+        <p>Isbn: {book.isbn}</p>
+        <p>Precio: {book.price}</p>
+        <p>Categoría: {book.category}</p>
+        <p>Año publicación: {book.publicationYear}</p>
         <Button variant="secondary" onClick={handleShow}>
           Editar
         </Button>{" "}
-        <Button variant="danger">Archivar</Button>
+        <Button variant="danger" onClick={deleteBook}>
+          Archivar
+        </Button>
       </Col>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Editar información de libro</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form onSubmit={handleSubmit((data) => updateBook(data))}>
+            <Form.Group className="mb-3">
               <Form.Label>Titulo</Form.Label>
-              <Form.Control value={book.title} />
+              <Form.Control
+                type="text"
+                {...register("name", { value: book.name })}
+              />
             </Form.Group>
-            <Form.Group
-              className="mb-3"
-            >
+            <Form.Group className="mb-3">
               <Form.Label>Descripción</Form.Label>
-              <Form.Control as="textarea" rows={10} value={book.description}/>
+              <Form.Control
+                as="textarea"
+                rows={5}
+                {...register("description", { value: book.description })}
+              />
             </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Autor</Form.Label>
+              <Form.Control {...register("author", { value: book.author })} />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Isbn</Form.Label>
+              <Form.Control {...register("isbn", { value: book.isbn })} />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Precio</Form.Label>
+              <Form.Control {...register("price", { value: book.price })} />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Categoría</Form.Label>
+              <Form.Control
+                {...register("category", { value: book.category })}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Año publicación</Form.Label>
+              <Form.Control
+                {...register("publicationYear", {
+                  value: book.publicationYear,
+                })}
+              />
+            </Form.Group>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Cerrar
+              </Button>
+              <Button variant="primary" type="submit">
+                Actualizar
+              </Button>
+            </Modal.Footer>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cerrar
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Actualizar
-          </Button>
-        </Modal.Footer>
       </Modal>
     </Row>
   );
