@@ -1,34 +1,20 @@
 pipeline {
     agent any
-    options {
-        skipStagesAfterUnstable()
-    }
-    stages {
-         stage('Clone repository') { 
-            steps { 
-                script{
-                    checkout scm
-                }
-            }
-        }
 
-        stage('Build') { 
-            steps { 
-                script{
-                    echo "Building the proyect"
-                }
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
             }
         }
-        stage('Testing'){
+        stage('Test') {
             steps {
-                echo 'Testing the proyect ...'
+                echo 'Testing..'
             }
         }
         stage('Deploy') {
             steps {
-                script{
-                    echo "Deploying .."
-                }
+                echo 'Deploying....'
             }
         }
     }
