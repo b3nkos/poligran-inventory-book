@@ -1,12 +1,14 @@
 version: "3.9"
 services:
   backend:
+    container_name: poligram-inventory-book-backend
     build:
       context: backend
       dockerfile: Dockerfile
     ports:
       - 8080:8080
   frontend:
+    container_name: poligram-inventory-book-frontend
     build:
       context: frontend
       dockerfile: Dockerfile
@@ -19,4 +21,6 @@ services:
     ports:
       - 8000:8080
       - 50000:50000
+    volumes:
+      - //var/run/docker.sock:/var/run/docker.sock
     restart: on-failure
