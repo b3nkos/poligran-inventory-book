@@ -1,10 +1,11 @@
 import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import { Link, Route, Routes } from "react-router-dom";
+import "./App.scss";
+import { AddBook } from "./pages/add-book";
 import { Home } from "./pages/home";
 import { SinglePost } from "./pages/single-post";
-
-import { Route, Routes } from "react-router-dom";
-import "./App.scss";
 
 function App() {
   return (
@@ -29,12 +30,21 @@ function App() {
             </svg>
             <span className="title">Book's inventory</span>
           </Navbar.Brand>
+          <Nav>
+            <Link
+              to="/add-book"
+              style={{ color: "#fff", textDecoration: "none" }}
+            >
+              Agregar libro
+            </Link>
+          </Nav>
         </Container>
       </Navbar>
       <Container className="mt-5 mb-5">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path={`/book/:bookId`} element={<SinglePost />} />
+          <Route path="/add-book" element={<AddBook />} />
         </Routes>
       </Container>
     </>
