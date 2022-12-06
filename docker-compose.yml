@@ -12,3 +12,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3000:3000
+  jenkins:
+    build:
+      context: jenkins
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8080
+      - 50000:50000
+    restart: on-failure
