@@ -23,15 +23,6 @@ pipeline {
                 sh 'cd backend && mvn test'
             }
         }
-
-        stage('Test Frontend') {
-            agent {
-                docker { image 'inventory-frontend:latest' }
-            }
-            steps {
-                sh 'cd frontend && npm run test'
-            }
-        }
         
         stage('Deploy backend') {
             steps {
