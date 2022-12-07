@@ -9,7 +9,7 @@ pipeline {
             }
         }
 
-        stage('Build FRONTEND image') {
+        stage('Build FRONTEND docker image') {
             steps {
                 sh 'docker build -t inventory-frontend:latest frontend/.'
             }
