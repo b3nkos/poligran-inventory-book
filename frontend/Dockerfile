@@ -4,7 +4,9 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm install
+ENV NODE_ENV development
+
+RUN npm ci --include=dev
 
 EXPOSE 3000
 
