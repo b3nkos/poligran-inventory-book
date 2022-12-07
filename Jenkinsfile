@@ -3,35 +3,45 @@ pipeline {
 
     stages {
 
-        stage('Stop and remove containers') {
+        stage('Build BACKEND docker image') {
             steps {
-                sh 'docker stop poligram-inventory-book-backend'
-                sh 'docker rm poligram-inventory-book-backend'
-                sh 'docker stop poligram-inventory-book-frontend'
-                sh 'docker rm poligram-inventory-book-frontend'
+                sh 'docker build -t inventory-backend:latest backend/.'
             }
         }
 
-        stage('Build docker images') {
+        stage('Build FRONTEND image') {
             steps {
-                sh 'docker compose -f docker-compose.yml build backend'
-                sh 'docker compose -f docker-compose.yml build frontend'
+                sh 'docker build -t inventory-frontend:latest frontend/.'
             }
         }
 
         stage('Test Backend') {
             agent {
-                docker { image 'poligran-inventory-book-backend:latest' }
+                docker { image 'inventory-backend:latest' }
             }
             steps {
-                sh 'mvn test'
+                sh 'cd backend && mvn test'
+            }
+        }
+
+        stage('Test Frontend') {
+            agent {
+                docker { image 'inventory-frontend:latest' }
+            }
+            steps {
+                sh 'cd frontend && npm run test'
             }
         }
         
-        stage('Deploy') {
+        stage('Deploy backend') {
             steps {
-                sh 'docker compose -f docker-compose.yml up -d backend'
-                sh 'docker compose -f docker-compose.yml up -d frontend'
+                sh 'docker run --name inventory-backend-container --rm --detach --publish 8080:8080 inventory-backend'
+            }
+        }
+
+        stage('Deploy frontend') {
+            steps {
+                sh 'docker run --name inventory-frontend-container --rm --detach --publish 3000:3000 inventory-frontend'
             }
         }
     }
