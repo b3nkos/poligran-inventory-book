@@ -4,10 +4,12 @@ WORKDIR /app
 
 COPY . .
 
-ENV NODE_ENV development
+RUN npm ci 
 
-RUN npm ci --include=dev
+RUN npm run build
+
+ENV NODE_ENV production
 
 EXPOSE 3000
 
-CMD [ "npm", "run", "start" ]
+CMD [ "npx", "serve", "build" ]
