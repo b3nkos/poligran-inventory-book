@@ -18,7 +18,7 @@ export const SinglePost = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/books/${bookId}`)
+    fetch(`http://inventory.poligran.com:8080/api/books/${bookId}`)
       .then((res) => res.json())
       .then((result) => {
         console.log("result", result);
@@ -30,7 +30,7 @@ export const SinglePost = () => {
   const updateBook = (data) => {
     delete data.id;
     console.log("data", data);
-    fetch(`http://localhost:8080/api/books/${book.id}`, {
+    fetch(`http://inventory.poligran.com:8080/api/books/${book.id}`, {
       method: "PUT",
       headers: {
         Accept: "application/json",
@@ -46,7 +46,7 @@ export const SinglePost = () => {
   };
 
   const deleteBook = () => {
-    fetch("http://localhost:8080/api/books", {
+    fetch("http://inventory.poligran.com:8080/api/books", {
       method: "DELETE",
       headers: {
         Accept: "application/json",

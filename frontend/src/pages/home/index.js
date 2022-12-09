@@ -9,7 +9,7 @@ export const Home = () => {
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/books")
+    fetch("http://inventory.poligran.com:8080/api/books")
       .then((res) => res.json())
       .then((result) => {        
         setBooks(result);

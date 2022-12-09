@@ -8,7 +8,7 @@ export const AddBook = () => {
   const navigate = useNavigate();
 
   const postBook = (data) => {
-    fetch("http://localhost:8080/api/books", {
+    fetch("http://inventory.poligran.com:8080/api/books", {
       method: "POST",
       headers: {
         Accept: "application/json",
