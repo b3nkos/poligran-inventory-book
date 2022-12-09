@@ -63,7 +63,7 @@ public class BookInventoryApplication {
                             1970
                     ),
                     new Book(
-                            9123L,
+                            9123323L,
                             "A Dance with Dragons (A Song of Ice and Fire) II",
                             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                             "Gorge R.R Martin",
