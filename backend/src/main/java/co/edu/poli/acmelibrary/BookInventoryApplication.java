@@ -71,6 +71,16 @@ public class BookInventoryApplication {
                             150_000.00D,
                             "Fantasy",
                             1980
+                    ),
+                    new Book(
+                            9837662L,
+                            "One Hundred Years of Solitude",
+                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                            "Gabriel Garcia Marquez",
+                            "9780553583827",
+                            190_000.00D,
+                            "Fantasy",
+                            1980
                     )
             );
 
